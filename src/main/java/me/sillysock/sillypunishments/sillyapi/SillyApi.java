@@ -1,21 +1,16 @@
 package me.sillysock.sillypunishments.sillyapi;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SillyApi {
 
@@ -33,6 +28,14 @@ public class SillyApi {
 
         List<Component> test = new ArrayList<>();
         test.add(Component.text("awe"));
+
+        /*
+        TODO: Add rest of menu items
+        BAN
+        MUTE
+        WARN
+        KICK
+         */
 
         return menu;
     }

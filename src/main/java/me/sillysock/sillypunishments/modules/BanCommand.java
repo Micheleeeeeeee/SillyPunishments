@@ -36,17 +36,9 @@ public class BanCommand implements CommandExecutor {
            || !(p.hasPermission(adminRoot))
            || !(p.hasPermission(prefix + "*"))) {
 
-            assert noPermission != null;
-            p.sendMessage(
-                    noPermission
-            );
-
+            p.sendMessage(noPermission);
             return true;
         }
-
-        p.sendMessage(
-                "Oh my god nothing errored WE DID IT"
-        );
 
         return false;
     }
