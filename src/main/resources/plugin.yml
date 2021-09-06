@@ -1,0 +1,10 @@
+name: SillyPunishments
+version: '${project.version}'
+main: me.sillysock.sillypunishments.SillyPunishments
+api-version: 1.17
+
+commands:
+  helloworld:
+    description: dude read the command name
+  ban:
+    description: Ban a player

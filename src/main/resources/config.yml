@@ -1,0 +1,6 @@
+perms: 'sillyperms'
+administrator: 'admin' # perm string.admin string [example: sillyperms.admin]
+moderator: 'moderator' # perm string.mod string [example: sillyperms.moderator]
+member: 'member' # perm string.member string [example: sillyperms.member]
+
+miscellaneous: 'miscellaneous' # perm string.miscellaneous string [example: sillyperms.miscellaneous]

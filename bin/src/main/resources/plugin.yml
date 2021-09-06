@@ -1,0 +1,4 @@
+name: SillyPunishments
+version: '${project.version}'
+main: me.sillysock.sillypunishments.SillyPunishments
+api-version: 1.17
