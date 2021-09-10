@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,8 +53,8 @@ public class SillyPunishments extends JavaPlugin {
 
         log.log(Level.INFO, "Registering commands");
 
-        register("helloworld", new HelloWorld());
-        register("ban", new BanCommand());
+        register("helloworld", new HelloWorld()); // Registers the command from the HelloWorld class (modules --> HelloWorld.java) and prints a log message.
+        register("ban", new BanCommand()); // Registers the command from the BanCommand class (modules --> BanCommand.java) and prints a log message.
     }
 
     /**
@@ -93,6 +94,25 @@ public class SillyPunishments extends JavaPlugin {
             createLangFile();
         }
     }
+
+    /**
+     * <h1 style="font-family: sans-serif; font-size: 10px;">
+     *
+     *     The register method takes two arguments, a string, for the command name, and a CommandExecutor class, which implements the
+     *     CommandExecutor interface. It registers the command, and then outputs a log message.
+     *
+     *     i.e:
+     *     register("helloworld", new HelloWorld());
+     *
+     *     Would Output:
+     *
+     *     Command helloworld
+     *     Registered with me.sillysock.sillypunishments.modules.helloworld
+     *
+     * </h1>
+     * @param cmd
+     * @param executor
+     */
 
     private void register(final String cmd, final CommandExecutor executor) {
         getCommand(cmd).setExecutor(executor);

@@ -1,15 +1,15 @@
 package me.sillysock.sillypunishments.sillyapi;
 
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import net.kyori.adventure.text.Component; // Text
+import org.bukkit.Bukkit; // buwukkit
+import org.bukkit.Material; // Item i.e DIAMOND_SWORD
+import org.bukkit.OfflinePlayer; // OfflinePlayer, players that aren't online :tro:
+import org.bukkit.inventory.Inventory; // Create GUIs
+import org.bukkit.inventory.ItemStack; // ItemStack
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
+import java.util.ArrayList; //
 import java.util.List;
 
 public class SillyApi {
@@ -34,7 +34,7 @@ public class SillyApi {
         BAN
         MUTE
         WARN
-        KICK
+        KICKq
          */
 
         return menu;

@@ -10,9 +10,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * <h1 style="font-family: --apple-system"><code style="font-size: 20px;">{@code BanCommand.java}</code> is used for punishing any player on the current server,
+ * Using GUI.</h1>
+ *
+ * <h2 style="font-family: --apple-system">Requires: permroot.admin | permroot.mod | permroot.*</h2>
+ */
+
 public class BanCommand implements CommandExecutor {
 
-    private final FileConfiguration langFile = SillyPunishments.getLangFile();
+    protected final FileConfiguration langFile = SillyPunishments.getLangFile();
     private final String prefix = langFile.getString("prefix");
     private final String noPermission = langFile.getString("no-permission");
     private final String permissionRoot = langFile.getString("perms");
@@ -37,6 +44,7 @@ public class BanCommand implements CommandExecutor {
            || !(p.hasPermission(prefix + "*"))) {
 
             p.sendMessage(noPermission);
+
             return true;
         }
 
