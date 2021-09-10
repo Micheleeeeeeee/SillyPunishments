@@ -25,15 +25,14 @@ Silly Punishments has been tested on: 1.17 - Spigot
 # Report a bug
 To report a bug, please use this format [on the issues page here](https://github.com/Sillysockk/SillyPunishments/issues).
 
-<-- Basic Information --> 
-Server Minecraft Version: **Example: 1.17**
-Server Type: **Example: Spigot**
-Plugin Version: **Example: 1.0.0** DO NOT TYPE 'LATEST'. 
+<-- Basic Information -->
+- Server Minecraft Version: **Example: 1.17**
+- Server Type: **Example: Spigot**
+- Plugin Version: **Example: 1.0.0** DO NOT TYPE 'LATEST'. 
 
 <-- Bug Information -->
-Give a descriptive description of what the bug is.
-
-Give a method on how to reproduce it.
+- Give a descriptive description of what the bug is.
+- Give a method on how to reproduce it.
 
 
 
