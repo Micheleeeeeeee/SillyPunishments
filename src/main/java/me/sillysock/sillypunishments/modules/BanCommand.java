@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.modules;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import me.sillysock.sillypunishments.sillyapi.SillyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +22,7 @@ public class BanCommand implements CommandExecutor {
 
     protected final FileConfiguration langFile = SillyPunishments.getLangFile();
     private final String prefix = langFile.getString("prefix");
-    private final String noPermission = langFile.getString("no-permission");
+    private final String noPermission = langFile.getString("no_permission");
     private final String permissionRoot = langFile.getString("perms");
     private final String modRoot = permissionRoot + langFile.getString("moderator");
     private final String adminRoot = permissionRoot + langFile.getString("administrator");
@@ -47,6 +48,9 @@ public class BanCommand implements CommandExecutor {
 
             return true;
         }
+
+        p.openInventory(SillyApi.createPunishMenu(p));
+
 
         return false;
     }

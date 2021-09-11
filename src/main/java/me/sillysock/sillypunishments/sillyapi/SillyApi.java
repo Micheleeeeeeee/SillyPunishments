@@ -15,36 +15,24 @@ import java.util.List;
 public class SillyApi {
 
     private static Inventory menu;
-    private static Component title;
 
     public static Inventory createPunishMenu(final OfflinePlayer target) {
-        title = Component.text("Punish " + target);
+        String title = "Punish " + target;
 
-        menu = Bukkit.createInventory(null, 36, title);  // Create an inventory with the size 36.
+        menu = Bukkit.createInventory(null, 36, title); // Create an inventory with the size 36.
 
         final ItemStack head = getHead(target);  // Create head by getting head [in. method]
 
         menu.setItem(4, head);  // Add head to the menu at the 4th slot.
 
-        List<Component> test = new ArrayList<>();
-        test.add(Component.text("awe"));
-
-        /*
-        TODO: Add rest of menu items
-        BAN
-        MUTE
-        WARN
-        KICKq
-         */
-
         return menu;
     }
 
-    private static void createMenuItem(final Material material, final String name, final List<Component> lore, final int slot, final Inventory menu) {
+    private static void createMenuItem(final Material material, final String name, final List<String> lore, final int slot, final Inventory menu) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
-        meta.lore(lore);
+        meta.setLore(lore);
         meta.setLocalizedName(name);
 
         item.setItemMeta(meta);
