@@ -1,67 +1,77 @@
 package me.sillysock.sillypunishments.sillyapi;
 
-import net.kyori.adventure.text.Component; // Text
-import org.bukkit.Bukkit; // buwukkit
-import org.bukkit.Material; // Item i.e DIAMOND_SWORD
-import org.bukkit.OfflinePlayer; // OfflinePlayer, players that aren't online :tro:
-import org.bukkit.inventory.Inventory; // Create GUIs
-import org.bukkit.inventory.ItemStack; // ItemStack
+import java.util.ArrayList;
+import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.ArrayList; //
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class SillyApi {
 
-    private static Inventory menu;
-    private static Component title;
+  private static Inventory menu;
+  private String title = "Punish ";
 
-    public static Inventory createPunishMenu(final OfflinePlayer target) {
-        title = Component.text("Punish " + target);
+  public Inventory createPunishMenu(final OfflinePlayer target) {
+    title += target.getName();
 
-        menu = Bukkit.createInventory(null, 36, title);  // Create an inventory with the size 36.
+    menu = Bukkit.createInventory(
+        null, 36, title); // Create an inventory with the size 36.
 
-        final ItemStack head = getHead(target);  // Create head by getting head [in. method]
+    final ItemStack head =
+        getHead(target); // Create head by getting head [in. method]
 
-        menu.setItem(4, head);  // Add head to the menu at the 4th slot.
+    menu.setItem(4, head); // Add head to the menu at the 4th slot.
 
-        List<Component> test = new ArrayList<>();
-        test.add(Component.text("awe"));
+    createMenuItem(Material.TERRACOTTA, "BAN", "",
+                   "Exclude " + target.getName(), "From the server.", "[BETA]",
+                   17, menu);
 
-        /*
-        TODO: Add rest of menu items
-        BAN
-        MUTE
-        WARN
-        KICKq
-         */
+    return menu;
+  }
 
-        return menu;
-    }
+  private static void createMenuItem(final Material material, final String name,
+                                     final String lore1, final String lore2,
+                                     final String lore3, final String lore4,
+                                     final int slot,
+                                     final @NotNull Inventory menu) {
+    ItemStack item = new ItemStack(material);
+    ItemMeta meta = item.getItemMeta();
 
-    private static void createMenuItem(final Material material, final String name, final List<Component> lore, final int slot, final Inventory menu) {
-        ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
+    List<String> lore = new ArrayList<>();
 
-        meta.lore(lore);
-        meta.setLocalizedName(name);
+    if (lore1 != null)
+      lore.add(lore1);
 
-        item.setItemMeta(meta);
+    if (lore2 != null)
+      lore.add(lore2);
 
-        menu.setItem(slot, item);
+    if (lore3 != null)
+      lore.add(lore3);
 
-    }
+    if (lore4 != null)
+      lore.add(lore4);
 
-    private static ItemStack getHead(final OfflinePlayer target) {
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+    meta.setLore(lore);
+    meta.setLocalizedName(name);
 
-        final SkullMeta meta = (SkullMeta) head.getItemMeta();
-        meta.setOwningPlayer(target);
+    item.setItemMeta(meta);
 
-        head.setItemMeta(meta);
+    menu.setItem(slot, item);
+  }
 
-        return head;
-    }
+  private static ItemStack getHead(final OfflinePlayer target) {
+    ItemStack head = new ItemStack(Material.PLAYER_HEAD);
 
+    final SkullMeta meta = (SkullMeta)head.getItemMeta();
+    meta.setOwningPlayer(target);
+
+    head.setItemMeta(meta);
+
+    return head;
+  }
 }
