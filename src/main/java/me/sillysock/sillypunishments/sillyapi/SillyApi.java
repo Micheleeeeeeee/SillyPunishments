@@ -1,15 +1,15 @@
 package me.sillysock.sillypunishments.sillyapi;
 
-import net.kyori.adventure.text.Component; // Text
-import org.bukkit.Bukkit; // buwukkit
-import org.bukkit.Material; // Item i.e DIAMOND_SWORD
-import org.bukkit.OfflinePlayer; // OfflinePlayer, players that aren't online :tro:
-import org.bukkit.inventory.Inventory; // Create GUIs
-import org.bukkit.inventory.ItemStack; // ItemStack
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList; //
+import java.util.ArrayList;
 import java.util.List;
 
 public class SillyApi {
@@ -18,7 +18,7 @@ public class SillyApi {
     private String title = "Punish ";
 
     public Inventory createPunishMenu(final OfflinePlayer target) {
-        title += target;
+        title += target.getName();
 
         menu = Bukkit.createInventory(null, 36, title); // Create an inventory with the size 36.
 
@@ -26,12 +26,37 @@ public class SillyApi {
 
         menu.setItem(4, head);  // Add head to the menu at the 4th slot.
 
+        createMenuItem(
+                Material.TERRACOTTA
+                , "BAN"
+                , ""
+                , "Exclude " + target.getName()
+                , "From the server."
+                , "[BETA]"
+                , 17
+                , menu
+        );
+
         return menu;
     }
 
-    private static void createMenuItem(final Material material, final String name, final List<String> lore, final int slot, final Inventory menu) {
+    private static void createMenuItem(final Material material, final String name, final String lore1, final String lore2, final String lore3, final String lore4, final int slot, final @NotNull Inventory menu) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
+
+        List<String> lore = new ArrayList<>();
+
+        if (lore1 != null)
+            lore.add(lore1);
+
+        if (lore2 != null)
+            lore.add(lore2);
+
+        if (lore3 != null)
+            lore.add(lore3);
+
+        if (lore4 != null)
+            lore.add(lore4);
 
         meta.setLore(lore);
         meta.setLocalizedName(name);

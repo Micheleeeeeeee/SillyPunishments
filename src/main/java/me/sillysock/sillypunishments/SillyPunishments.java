@@ -11,19 +11,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SillyPunishments extends JavaPlugin {
 
-    protected static File lang; /* lang.yml */
-    protected FileConfiguration config; /* config.yml */
+    protected static File lang; // lang.yml
+    protected FileConfiguration config; // config.yml
 
-    protected static FileConfiguration langConfig; /* lang.yml */
-    protected Logger log; /* log stuff to console */
+    protected static FileConfiguration langConfig; // lang.yml
+    protected Logger log; // log stuff to console
 
-    protected static SillyPunishments instance; /* instance of main class */
+    protected static SillyPunishments instance; // instance of main class
     protected static SillyApi api;
 
     /**
