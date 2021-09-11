@@ -2,6 +2,7 @@ package me.sillysock.sillypunishments;
 
 import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.modules.HelloWorld;
+import me.sillysock.sillypunishments.sillyapi.SillyApi;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,6 +24,7 @@ public class SillyPunishments extends JavaPlugin {
     protected Logger log; /* log stuff to console */
 
     protected static SillyPunishments instance; /* instance of main class */
+    protected static SillyApi api;
 
     /**
      * <h1 id="text" style="color: rgb(255, 192, 203);">
@@ -36,6 +38,7 @@ public class SillyPunishments extends JavaPlugin {
     public void onEnable() {
 
         instance = this;
+        api = new SillyApi();
 
         log = getLogger();
 
@@ -121,5 +124,9 @@ public class SillyPunishments extends JavaPlugin {
 
     public static SillyPunishments getInstance() {
         return instance;
+    }
+
+    public static SillyApi getApi() {
+        return api;
     }
 }

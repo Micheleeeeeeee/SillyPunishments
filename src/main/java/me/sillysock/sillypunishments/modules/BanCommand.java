@@ -20,7 +20,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class BanCommand implements CommandExecutor {
 
-    protected final FileConfiguration langFile = SillyPunishments.getLangFile();
+    private final FileConfiguration langFile = SillyPunishments.getLangFile();
+    private final SillyApi api = SillyPunishments.getApi();
+
     private final String prefix = langFile.getString("prefix");
     private final String noPermission = langFile.getString("no_permission");
     private final String permissionRoot = langFile.getString("perms");
@@ -49,8 +51,7 @@ public class BanCommand implements CommandExecutor {
             return true;
         }
 
-        p.openInventory(SillyApi.createPunishMenu(p));
-
+        p.openInventory(api.createPunishMenu(p));
 
         return false;
     }

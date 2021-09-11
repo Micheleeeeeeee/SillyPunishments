@@ -15,9 +15,10 @@ import java.util.List;
 public class SillyApi {
 
     private static Inventory menu;
+    private String title = "Punish ";
 
-    public static Inventory createPunishMenu(final OfflinePlayer target) {
-        String title = "Punish " + target;
+    public Inventory createPunishMenu(final OfflinePlayer target) {
+        title += target;
 
         menu = Bukkit.createInventory(null, 36, title); // Create an inventory with the size 36.
 
@@ -38,7 +39,6 @@ public class SillyApi {
         item.setItemMeta(meta);
 
         menu.setItem(slot, item);
-
     }
 
     private static ItemStack getHead(final OfflinePlayer target) {
