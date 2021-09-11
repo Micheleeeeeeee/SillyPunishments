@@ -27,8 +27,10 @@ public class PunishListeners implements Listener {
     if (e.getCurrentItem() == null)
       return;
 
-    final ItemStack item = e.getCurrentItem();
-    final ItemMeta meta = item.getItemMeta();
-    final @Nullable Component itemName = meta.displayName();
-  }
+        final ItemStack item = e.getCurrentItem();
+        final ItemMeta meta = item.getItemMeta();
+        final @Nullable Component itemName = meta.displayName();
+
+
+    }
 }
