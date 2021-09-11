@@ -13,6 +13,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class SillyApi {
 
+  /*
+  SillyReminders:
+
+  Flow Chart for Menus:
+
+  Punishment Main Menu
+  --> User Selection [KICK, BAN, MUTE]
+  --> Punishment Duration
+  --> Reason [or custom]
+  --> Punishment Executed
+   */
+
   private static Inventory menu;
   private String title = "Punish ";
 
@@ -32,6 +44,10 @@ public class SillyApi {
                    17, menu);
 
     return menu;
+  }
+
+  public Inventory createBanMenu(final OfflinePlayer target) {
+
   }
 
   private static void createMenuItem(final Material material, final String name,
