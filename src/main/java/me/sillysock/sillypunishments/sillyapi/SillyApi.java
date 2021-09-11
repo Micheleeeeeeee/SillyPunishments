@@ -1,7 +1,5 @@
 package me.sillysock.sillypunishments.sillyapi;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -10,6 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SillyApi {
 
@@ -26,6 +27,7 @@ public class SillyApi {
    */
 
   private static Inventory menu;
+  private static Inventory banMenu;
   private String title = "Punish ";
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
@@ -46,8 +48,20 @@ public class SillyApi {
     return menu;
   }
 
-  public Inventory createBanMenu(final OfflinePlayer target) {
+  /**
+   * createBanMenu creates the exclusion menu for Minecraft.
+   * This menu is used exclusively for excluding players from the server.
+   *
+   * @param target
+   * @return {@code Inventory}
+   */
 
+  public Inventory createBanMenu(final OfflinePlayer target) {
+    banMenu = Bukkit.createInventory(null, 36, "Exclude " + target);
+
+    banMenu.setItem(4, getHead(target));
+
+    return banMenu;
   }
 
   private static void createMenuItem(final Material material, final String name,
