@@ -46,7 +46,10 @@ public class BanCommand implements CommandExecutor {
            || !(p.hasPermission(adminRoot))
            || !(p.hasPermission(prefix + "*"))) {
 
-            p.sendMessage(noPermission);
+            p.sendMessage(noPermission
+                    != null
+                    ? noPermission
+                    : "You do not have the required permission to execute this command.");
 
             return true;
         }
@@ -54,5 +57,9 @@ public class BanCommand implements CommandExecutor {
         p.openInventory(api.createPunishMenu(p));
 
         return false;
+    }
+
+    private boolean checkPermission(final Player p) {
+        return false; // TODO
     }
 }
