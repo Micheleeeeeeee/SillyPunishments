@@ -13,22 +13,22 @@ import org.jetbrains.annotations.Nullable;
 
 public class PunishListeners implements Listener {
 
-    private PunishmentType type;
+  private PunishmentType type;
 
-    @EventHandler
-    public void PunishMainMenuHandler(final @NotNull InventoryClickEvent e) {
-        final InventoryView view = e.getView();
+  @EventHandler
+  public void PunishMainMenuHandler(final @NotNull InventoryClickEvent e) {
+    final InventoryView view = e.getView();
 
-        final String title = view.getTitle();
+    final String title = view.getTitle();
 
-        if (!title.contains("Punish")) return;
+    if (!title.contains("Punish"))
+      return;
 
-        if (e.getCurrentItem() == null) return;
+    if (e.getCurrentItem() == null)
+      return;
 
-        final ItemStack item = e.getCurrentItem();
-        final ItemMeta meta = item.getItemMeta();
-        final @Nullable Component itemName = meta.displayName();
-
-
-    }
+    final ItemStack item = e.getCurrentItem();
+    final ItemMeta meta = item.getItemMeta();
+    final @Nullable Component itemName = meta.displayName();
+  }
 }
