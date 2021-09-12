@@ -25,6 +25,8 @@ public class PunishListeners implements Listener {
         if (e.getCurrentItem() == null)
             return;
 
+        e.setCancelled(true); // Don't let user grab item out of menu :Scared:
+
         final ItemStack item = e.getCurrentItem();
         final ItemMeta meta = item.getItemMeta();
         final String name = meta.getDisplayName();
