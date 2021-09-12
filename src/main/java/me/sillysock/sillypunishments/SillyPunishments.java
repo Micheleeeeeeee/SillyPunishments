@@ -1,9 +1,6 @@
 package me.sillysock.sillypunishments;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import me.sillysock.sillypunishments.listeners.PunishListeners;
 import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.modules.HelloWorld;
 import me.sillysock.sillypunishments.sillyapi.SillyApi;
@@ -11,7 +8,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SillyPunishments extends JavaPlugin {
 
@@ -23,6 +27,7 @@ public class SillyPunishments extends JavaPlugin {
 
   protected static SillyPunishments instance; // instance of main class
   protected static SillyApi api;
+  protected final PluginManager manager = getServer().getPluginManager();
 
   /**
    * <h1 id="text" style="color: rgb(255, 192, 203);">
@@ -62,6 +67,9 @@ public class SillyPunishments extends JavaPlugin {
              new BanCommand()); // Registers the command from the BanCommand
                                 // class (modules --> BanCommand.java) and
                                 // prints a log message.
+
+    registerEvent("InventoryClickEvent", new PunishListeners()); // Registers the Listeners from the
+                                                                           // PunishListeners class and prints a log message.
   }
 
   /**
@@ -124,6 +132,11 @@ public class SillyPunishments extends JavaPlugin {
     getCommand(cmd).setExecutor(executor);
     System.out.println("Command: " + cmd + "\nRegistered with " +
                        executor.toString());
+  }
+
+  private void registerEvent(final String eventName, final Listener event) {
+    manager.registerEvents(event, this);
+    System.out.println("Event " + eventName + "\nRegistered with " + event.toString());
   }
 
   public static SillyPunishments getInstance() { return instance; }
