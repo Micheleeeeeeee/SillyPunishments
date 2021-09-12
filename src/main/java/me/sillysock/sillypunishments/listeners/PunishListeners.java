@@ -31,17 +31,22 @@ public class PunishListeners implements Listener {
         final ItemMeta meta = item.getItemMeta();
         final String name = meta.getDisplayName();
 
-        switch (name) {
-            case "BAN":
-                type = PunishmentType.BAN;
-                e.getWhoClicked().sendMessage("You clicked BAN!");
-            case "KICK":
-                type = PunishmentType.KICK;
-                e.getWhoClicked().sendMessage("You clicked KICK!");
-            case "MUTE":
-                type = PunishmentType.MUTE;
-                e.getWhoClicked().sendMessage("You clicked MUTE!");
+        type = parseType(name);
+        System.out.println(type);
+    }
 
-        }
+    private PunishmentType parseType(final String type) {
+        PunishmentType t = PunishmentType.OTHER;
+
+        if (type.equalsIgnoreCase("ban"))
+            t = PunishmentType.BAN;
+
+        if (type.equalsIgnoreCase("mute"))
+            t = PunishmentType.MUTE;
+
+        if (type.equalsIgnoreCase("kick"))
+            t = PunishmentType.KICK;
+
+        return t;
     }
 }
