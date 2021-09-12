@@ -35,6 +35,14 @@ public class PunishListeners implements Listener {
         System.out.println(type);
     }
 
+    /**
+     * The {@code parseType} method takes one parameter, a {@code String type}, and parses
+     * and determines which PunishmentType it is. If the String does not match any of the
+     * normal types, it returns {@code PunishmentType.OTHER}
+     * @param type
+     * @return PunishmentType
+     */
+
     private PunishmentType parseType(final String type) {
         PunishmentType t = PunishmentType.OTHER;
 
