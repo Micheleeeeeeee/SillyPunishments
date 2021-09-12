@@ -28,10 +28,10 @@ public class SillyApi {
 
   private static Inventory menu;
   private static Inventory banMenu;
-  private String title = "Punish ";
+  private String title;
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
-    title += target.getName();
+    title = "Punish " + C.YELLOW + target.getName();
 
     menu = Bukkit.createInventory(
         null, 36, title); // Create an inventory with the size 36.
@@ -49,9 +49,10 @@ public class SillyApi {
   }
 
   /**
+   * <p style="font-size: 12px; color: rgb(200, 151, 51);">
    * createBanMenu creates the exclusion menu for Minecraft.
    * This menu is used exclusively for excluding players from the server.
-   *
+   * </p>
    * @param target
    * @return {@code Inventory}
    */

@@ -8,7 +8,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -28,10 +27,8 @@ public class BanCommand implements CommandExecutor {
   private final String prefix = langFile.getString("prefix");
   private final String noPermission = langFile.getString("no_permission");
   private final String permissionRoot = langFile.getString("perms");
-  private final String modRoot =
-      permissionRoot + langFile.getString("moderator");
-  private final String adminRoot =
-      permissionRoot + langFile.getString("administrator");
+  private final String modRoot = permissionRoot + langFile.getString("moderator");
+  private final String adminRoot = permissionRoot + langFile.getString("administrator");
 
   @Override
   public boolean
