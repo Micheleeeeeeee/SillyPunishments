@@ -34,10 +34,13 @@ public class PunishListeners implements Listener {
         switch (name) {
             case "BAN":
                 type = PunishmentType.BAN;
+                e.getWhoClicked().sendMessage("You clicked BAN!");
             case "KICK":
                 type = PunishmentType.KICK;
+                e.getWhoClicked().sendMessage("You clicked KICK!");
             case "MUTE":
                 type = PunishmentType.MUTE;
+                e.getWhoClicked().sendMessage("You clicked MUTE!");
 
         }
     }
