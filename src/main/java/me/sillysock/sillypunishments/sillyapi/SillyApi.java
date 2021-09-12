@@ -87,8 +87,8 @@ public class SillyApi {
     if (lore4 != null)
       lore.add(lore4);
 
-    meta.setLore(lore);
-    meta.setLocalizedName(name);
+    meta.setLore(lore); // Lore [description of item]
+    meta.setDisplayName(name); // Set name of item to [name]..
 
     item.setItemMeta(meta);
 
