@@ -26,8 +26,8 @@ public class SillyApi {
   --> Punishment Executed
    */
 
-  private static Inventory menu;
-  private static Inventory banMenu;
+  private Inventory menu;
+  private Inventory banMenu;
   private String title;
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
