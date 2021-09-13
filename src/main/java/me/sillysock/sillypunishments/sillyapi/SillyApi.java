@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.sillyapi;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -35,6 +36,8 @@ public class SillyApi {
   private Inventory banMenu;
   private String title;
   private static final SillyPunishments main = SillyPunishments.getInstance();
+
+  public static final String BUMPER = StringUtils.repeat("\n", 25);
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
     title = "Punish " + C.YELLOW + target.getName();
