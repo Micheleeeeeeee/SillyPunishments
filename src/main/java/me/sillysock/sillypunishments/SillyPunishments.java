@@ -4,6 +4,8 @@ import me.sillysock.sillypunishments.listeners.PunishListeners;
 import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.modules.HelloWorld;
 import me.sillysock.sillypunishments.sillyapi.SillyApi;
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,6 +30,8 @@ public class SillyPunishments extends JavaPlugin {
   protected static SillyPunishments instance; // instance of main class
   protected static SillyApi api;
   protected final PluginManager manager = getServer().getPluginManager();
+
+  protected static BanList banList; // List of banned players!
 
   /**
    * <h1 id="text" style="color: rgb(255, 192, 203);">
@@ -70,6 +74,9 @@ public class SillyPunishments extends JavaPlugin {
 
     registerEvent("InventoryClickEvent", new PunishListeners()); // Registers the Listeners from the
                                                                            // PunishListeners class and prints a log message.
+
+    banList = Bukkit.getBanList(BanList.Type.NAME);
+
   }
 
   /**
@@ -142,4 +149,8 @@ public class SillyPunishments extends JavaPlugin {
   public static SillyPunishments getInstance() { return instance; }
 
   public static SillyApi getApi() { return api; }
+
+  public static BanList getBanList() {
+    return banList;
+  }
 }

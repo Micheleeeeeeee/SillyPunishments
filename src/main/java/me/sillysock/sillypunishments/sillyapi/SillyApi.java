@@ -1,15 +1,20 @@
 package me.sillysock.sillypunishments.sillyapi;
 
+import me.sillysock.sillypunishments.SillyPunishments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SillyApi {
@@ -29,6 +34,7 @@ public class SillyApi {
   private Inventory menu;
   private Inventory banMenu;
   private String title;
+  private static final SillyPunishments main = SillyPunishments.getInstance();
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
     title = "Punish " + C.YELLOW + target.getName();
@@ -65,6 +71,7 @@ public class SillyApi {
     return banMenu;
   }
 
+  @Deprecated()
   private static void createMenuItem(final Material material, final String name,
                                      final String lore1, final String lore2,
                                      final String lore3, final String lore4,
@@ -104,5 +111,24 @@ public class SillyApi {
     head.setItemMeta(meta);
 
     return head;
+  }
+
+  @TestOnly()
+  public static boolean banPlayer(final Player p, final Date expires, final String reason) {
+
+    long currUnix = Instant.now().getEpochSecond();
+    SillyPunishments.getBanList().addBan(p.getName(), reason, expires, null);
+    p.kickPlayer(reason);
+
+    return false;
+  }
+
+  @TestOnly()
+  public static boolean permanentBan(final Player player, final String reason) {
+    SillyPunishments.getBanList().addBan(player.getName(), reason, null, null);
+
+    player.kickPlayer(reason);
+
+    return false;
   }
 }

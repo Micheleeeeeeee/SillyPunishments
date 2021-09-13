@@ -32,7 +32,6 @@ public class PunishListeners implements Listener {
         final String name = meta.getDisplayName();
 
         type = parseType(name);
-        System.out.println(type);
     }
 
     /**
