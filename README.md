@@ -35,7 +35,7 @@ To report a bug, please use this format [on the issues page here](https://github
 - Give a method on how to reproduce it.
 
 # License
-This code is licensed under the BSD-3 License. See [this page](https://github.com/Sillysockk/SillyPunishments/tree/main/LICENSE.md) for more information.
+This code is licensed under the BSD-3 License. See [this page](https://github.com/Sillysockk/SillyPunishments/blob/main/LICENSE.md) for more information.
 
 # This README page is subject to change.
 
