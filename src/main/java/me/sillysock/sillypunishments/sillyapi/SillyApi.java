@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.TestOnly;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -116,22 +115,25 @@ public class SillyApi {
     return head;
   }
 
-  @TestOnly()
-  public static boolean banPlayer(final Player p, final Date expires, final String reason) {
+  /**
+   * Deprecated as this plugin will migrate to MySQL.
+   * @param p
+   * @param expires
+   * @param reason
+   * @return
+   */
 
-    long currUnix = Instant.now().getEpochSecond();
-    SillyPunishments.getBanList().addBan(p.getName(), reason, expires, null);
-    p.kickPlayer(reason);
-
-    return false;
+  @Deprecated()
+  public static void banPlayer(final Player p, final Date expires, final String reason) { }
   }
 
-  @TestOnly()
-  public static boolean permanentBan(final Player player, final String reason) {
-    SillyPunishments.getBanList().addBan(player.getName(), reason, null, null);
+  /**
+   * Deprecated as this plugin will migrate to MySQL.
+   * @param player
+   * @param reason
+   * @return
+   */
 
-    player.kickPlayer(reason);
-
-    return false;
-  }
+  @Deprecated()
+  public static void permanentBan(final Player player, final String reason) { }
 }
