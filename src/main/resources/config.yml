@@ -4,3 +4,10 @@ moderator: 'moderator' # perm string.mod string [example: sillyperms.moderator]
 member: 'member' # perm string.member string [example: sillyperms.member]
 
 miscellaneous: 'miscellaneous' # perm string.miscellaneous string [example: sillyperms.miscellaneous]
+
+# MYSQL
+# Replace these values with your own.
+username: 'root'
+host: 'localhost'
+passphrase: 'password'
+port: 3306

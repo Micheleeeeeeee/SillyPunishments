@@ -3,6 +3,7 @@ package me.sillysock.sillypunishments;
 import me.sillysock.sillypunishments.listeners.PunishListeners;
 import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.modules.HelloWorld;
+import me.sillysock.sillypunishments.sillyapi.C;
 import me.sillysock.sillypunishments.sillyapi.SillyApi;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -21,17 +22,23 @@ import java.util.logging.Logger;
 
 public class SillyPunishments extends JavaPlugin {
 
-  protected static File lang;         // lang.yml
-  protected FileConfiguration config; // config.yml
+  protected static File lang;                    // lang.yml
+  protected FileConfiguration config;            // config.yml
 
   protected static FileConfiguration langConfig; // lang.yml
   protected Logger log;                          // log stuff to console
 
-  protected static SillyPunishments instance; // instance of main class
+  protected static SillyPunishments instance;    // instance of main class
   protected static SillyApi api;
   protected final PluginManager manager = getServer().getPluginManager();
 
-  protected static BanList banList; // List of banned players!
+  protected static BanList banList;              // List of banned players!
+
+  protected static String databaseUsername;
+  protected static String databaseHost;
+  protected static String databasePassphrase;
+  protected static String databaseName;
+  protected static int databasePort;
 
   /**
    * <h1 id="text" style="color: rgb(255, 192, 203);">
@@ -77,6 +84,12 @@ public class SillyPunishments extends JavaPlugin {
 
     banList = Bukkit.getBanList(BanList.Type.NAME);
 
+    log.log(Level.INFO, "Getting Database information...");
+    databaseUsername = config.getString("username");
+    databaseHost = config.getString("host");
+    databasePort = config.getInt("port");
+    databasePassphrase = config.getString("passphrase");
+    databaseName = config.getString("database");
   }
 
   /**
@@ -112,13 +125,14 @@ public class SillyPunishments extends JavaPlugin {
       langConfig.load(lang);
     } catch (IOException | InvalidConfigurationException e) {
       createLangFile();
+      System.out.println(C.RED + "An error has occurred whilst generating the lang file.");
     }
   }
 
   /**
    * <h1 style="font-family: sans-serif; font-size: 10px;">
    *
-   *     The register method takes two arguments, a string, for the command
+   * The register method takes two arguments, a string, for the command
    * name, and a CommandExecutor class, which implements the CommandExecutor
    * interface. It registers the command, and then outputs a log message.
    *
@@ -152,5 +166,25 @@ public class SillyPunishments extends JavaPlugin {
 
   public static BanList getBanList() {
     return banList;
+  }
+
+  public static String getDatabaseUsername() {
+    return databaseUsername;
+  }
+
+  public static String getDatabaseHost() {
+    return databaseHost;
+  }
+
+  public static int getDatabasePort() {
+    return databasePort;
+  }
+
+  public static String getDatabasePassphrase() {
+    return databasePassphrase;
+  }
+
+  public static String getDatabaseName() {
+    return databaseName;
   }
 }

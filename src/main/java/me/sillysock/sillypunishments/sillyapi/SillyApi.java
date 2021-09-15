@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -125,7 +124,6 @@ public class SillyApi {
 
   @Deprecated()
   public static void banPlayer(final Player p, final Date expires, final String reason) { }
-  }
 
   /**
    * Deprecated as this plugin will migrate to MySQL.
