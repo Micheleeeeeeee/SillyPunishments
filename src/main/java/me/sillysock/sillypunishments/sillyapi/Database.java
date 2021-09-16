@@ -2,9 +2,7 @@ package me.sillysock.sillypunishments.sillyapi;
 
 import me.sillysock.sillypunishments.SillyPunishments;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.UUID;
 
 public class Database {
@@ -73,13 +71,66 @@ public class Database {
     public boolean isPunished(final UUID uuid) {
         openConnection();
 
+        try {
+            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
+            ps.setString(1, uuid.toString());
 
+            final ResultSet results = ps.executeQuery();
+            if (!results.next()) {
+                ps.close();
+                results.close();
+
+                return false;
+            }
+
+            ps.close();
+            results.close();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeConnection();
 
         return false;
     }
 
+    /**
+     * This method takes one parameter, UUID, and returns the time left until
+     * Their punishment expires. If their punishment is permanent, it will return -1.
+     * If they are not punished, it will return 0.
+     * @param uuid
+     * @return unix
+     */
+
     public long getPunishmentExpiry(final UUID uuid) {
 
-        return 0;
+        if (!isPunished(uuid)) return 0;
+
+        long out = 0;
+        openConnection();
+
+        try {
+            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
+            ps.setString(1, uuid.toString());
+
+            final ResultSet results = ps.executeQuery();
+
+            while (results.next()) {
+                out = results.getLong("expiry");
+
+                results.close();
+                ps.close();
+                closeConnection();
+            }
+
+            closeConnection();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO better exception handling
+        }
+
+        return out;
     }
 }

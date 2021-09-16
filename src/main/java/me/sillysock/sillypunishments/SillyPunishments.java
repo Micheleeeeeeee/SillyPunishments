@@ -4,6 +4,7 @@ import me.sillysock.sillypunishments.listeners.PunishListeners;
 import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.modules.HelloWorld;
 import me.sillysock.sillypunishments.sillyapi.C;
+import me.sillysock.sillypunishments.sillyapi.Database;
 import me.sillysock.sillypunishments.sillyapi.SillyApi;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -39,6 +40,8 @@ public class SillyPunishments extends JavaPlugin {
   protected static String databasePassphrase;
   protected static String databaseName;
   protected static int databasePort;
+
+  protected static Database db;
 
   /**
    * <h1 id="text" style="color: rgb(255, 192, 203);">
@@ -106,7 +109,9 @@ public class SillyPunishments extends JavaPlugin {
   }
 
   /**
-   * Get lang file
+   *<h1 style="font-family: sans-serif; font-size: 20px;">
+   *     Get lang file
+   *     </h1>
    */
 
   public static FileConfiguration getLangFile() { return langConfig; }
@@ -186,5 +191,9 @@ public class SillyPunishments extends JavaPlugin {
 
   public static String getDatabaseName() {
     return databaseName;
+  }
+
+  public static Database getDb() {
+    return db;
   }
 }
