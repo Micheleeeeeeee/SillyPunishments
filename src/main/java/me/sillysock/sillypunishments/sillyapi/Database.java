@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.sillyapi;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import org.jetbrains.annotations.TestOnly;
 
 import java.sql.*;
 import java.util.UUID;
@@ -16,20 +17,17 @@ public class Database {
     private int retries = 0;
     private Connection connection;
 
-    public boolean dataTableExists() {
-
+    @TestOnly()
+    public void createDataTable() {
         try {
-            final DatabaseMetaData dbm = connection.getMetaData();
-
-            final ResultSet tables = dbm.getTables(null, null, "data", null);
-
-            if (tables.next())
-                return true;
+            final PreparedStatement createTable = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS data (" +
+                            "" +
+                            ")"
+            );
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return false;
     }
     
     public void openConnection() {

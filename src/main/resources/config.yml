@@ -7,7 +7,9 @@ miscellaneous: 'miscellaneous' # perm string.miscellaneous string [example: sill
 
 # MYSQL
 # Replace these values with your own.
+# Make sure this user has permissions to INSERT, REMOVE on your selected DATABASE.
 username: 'root'
 host: 'localhost'
 passphrase: 'password'
 port: 3306
+database: 'database'
