@@ -15,6 +15,22 @@ public class Database {
     
     private int retries = 0;
     private Connection connection;
+
+    public boolean dataTableExists() {
+
+        try {
+            final DatabaseMetaData dbm = connection.getMetaData();
+
+            final ResultSet tables = dbm.getTables(null, null, "data", null);
+
+            if (tables.next())
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
     
     public void openConnection() {
         
