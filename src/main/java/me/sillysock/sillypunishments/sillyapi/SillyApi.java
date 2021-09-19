@@ -48,9 +48,17 @@ public class SillyApi {
 
     menu.setItem(4, head); // Add head to the menu at the 4th slot.
 
-    createMenuItem(Material.TERRACOTTA, "BAN", "",
+    createMenuItem(Material.TERRACOTTA, "Exclude", "",
                    "Exclude " + target.getName(), "From the server.", "[BETA]",
                    17, menu);
+
+    createMenuItem(Material.TERRACOTTA, "Mute", "",
+                 "Prevent " + target.getName(), " From speaking on the server.", C.RED + "BETA"
+                   , 19, menu);
+
+    createMenuItem(Material.TERRACOTTA, "Kick", "",
+                  "Remove " + target.getName(), "From the server.", C.RED + "BETA",
+                  21, menu);
 
     return menu;
   }
@@ -72,7 +80,6 @@ public class SillyApi {
     return banMenu;
   }
 
-  @Deprecated()
   private static void createMenuItem(final Material material, final String name,
                                      final String lore1, final String lore2,
                                      final String lore3, final String lore4,

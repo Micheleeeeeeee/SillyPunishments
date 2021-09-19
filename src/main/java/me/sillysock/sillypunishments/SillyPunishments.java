@@ -12,9 +12,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,6 +102,22 @@ public class SillyPunishments extends JavaPlugin {
     Bukkit
             .getConsoleSender()
             .sendMessage(C.GREEN + "The plugin has successfully started up! If you want to report any bugs, please go to https://github.com/Sillysockk/SillyPunishments");
+
+
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        for (final Player p :
+                Bukkit.getOnlinePlayers()) {
+
+          if (db.isBannedAndNotExpired(p.getUniqueId())) {
+            p.kickPlayer("TODO");
+          }
+
+          System.out.println("Looping through players and kicking anyone punished, not already kicked.");
+        }
+      }
+    }.runTaskTimer(this, 6000L, 6000L);
   }
 
   /**

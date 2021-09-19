@@ -195,6 +195,15 @@ public class Database {
         return PunishmentType.OTHER.toString();
     }
 
+    /**
+     * isBannedAndNotExpired takes one parameter, {@code uuid} and checks if the user is
+     * currently banned from the server, and whether the punishment is expired or not.
+     * This returns a {@code boolean}, indicating whether the player is banned and their punishment
+     * has not expired ({@code} true}) or otherwise {@code false}
+     * @param uuid
+     * @return
+     */
+
     public boolean isBannedAndNotExpired(final UUID uuid) {
         boolean out = false;
 
@@ -212,7 +221,8 @@ public class Database {
             final ResultSet results = ps.executeQuery();
 
             if (results.next()) {
-                if (Instant.now().getEpochSecond() < results.getLong("expiry")) out = true;
+                long expiry = results.getLong("expiry");
+                if (Instant.now().getEpochSecond() < expiry || expiry == -1) out = true;
             }
 
         } catch (SQLException e) {
@@ -250,14 +260,13 @@ public class Database {
 
                 results.close();
                 ps.close();
-                closeConnection();
             }
-
-            closeConnection();
 
         } catch (SQLException e) {
             e.printStackTrace(); // TODO better exception handling
         }
+
+        closeConnection();
 
         return out;
     }
