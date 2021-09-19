@@ -78,6 +78,8 @@ public class Database {
         host = SillyPunishments.getDatabaseHost();
 
         System.out.println("Logging in with details:\n" + "Username: " + username + "\nHost: " + host + "\nPassphrase: " + passphrase + "\nName: " + name + "\nPort: " + port);
+        System.out.println(C.RED + "No, I do not store your Database information anywhere. This is purely for your information.");
+
 
         if (retries >= 2) {
             retries = 0;

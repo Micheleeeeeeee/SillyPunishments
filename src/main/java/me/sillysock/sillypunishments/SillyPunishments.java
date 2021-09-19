@@ -96,6 +96,8 @@ public class SillyPunishments extends JavaPlugin {
     databaseName = config.getString("database");
 
     db.createDataTable();
+
+    System.out.println(C.GREEN + "The plugin has successfully started up! If you want to report any bugs, please go to https://github.com/Sillysockk/SillyPunishments");
   }
 
   /**
