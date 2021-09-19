@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public class Database {
     
-    private final String host = SillyPunishments.getDatabaseHost();
-    private final String username = SillyPunishments.getDatabaseUsername();
-    private final String passphrase = SillyPunishments.getDatabasePassphrase();
-    private final int port = SillyPunishments.getDatabasePort();
-    private final String name = SillyPunishments.getDatabaseName();
+    private String host;
+    private String username;
+    private String passphrase;
+    private int port;
+    private String name;
     
     private int retries = 0;
     private Connection connection;
@@ -60,7 +60,15 @@ public class Database {
     }
     
     public void openConnection() {
-        
+
+        username = SillyPunishments.getDatabaseUsername();
+        passphrase = SillyPunishments.getDatabasePassphrase();
+        port = SillyPunishments.getDatabasePort();
+        name = SillyPunishments.getDatabaseName();
+        host = SillyPunishments.getDatabaseHost();
+
+        System.out.println("Logging in with details:\n" + "Username: " + username + "\nHost: " + host + "\nPassphrase: " + passphrase + "\nName: " + name + "\nPort: " + port);
+
         if (retries >= 2) {
             retries = 0;
             return;
@@ -91,6 +99,7 @@ public class Database {
             retries += 1;
             openConnection();
             System.out.println("An error has occurred, retrying.\nRetries: " + retries);
+            e.printStackTrace();
         }
 
     }

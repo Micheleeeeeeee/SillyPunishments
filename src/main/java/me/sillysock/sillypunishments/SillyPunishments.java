@@ -56,6 +56,7 @@ public class SillyPunishments extends JavaPlugin {
 
     instance = this;
     api = new SillyApi();
+    db = new Database();
 
     log = getLogger();
 
@@ -93,6 +94,8 @@ public class SillyPunishments extends JavaPlugin {
     databasePort = config.getInt("port");
     databasePassphrase = config.getString("passphrase");
     databaseName = config.getString("database");
+
+    db.openConnection();
   }
 
   /**
