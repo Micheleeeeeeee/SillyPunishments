@@ -27,7 +27,8 @@ public class SillyApi {
   --> User Selection [KICK, BAN, MUTE]
   --> Punishment Duration
   --> Reason [or custom]
-  --> Punishment Executed
+  --> Database Entry for punishment added
+  --> Punishment Executed on server
    */
 
   private Inventory menu;
