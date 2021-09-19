@@ -18,39 +18,74 @@ public class Database {
     private Connection connection;
 
     @TestOnly()
-    public void createDataTable() {
+    public boolean dataTableExists() {
+        openConnection();
+
         try {
-            final PreparedStatement createTable = connection.prepareStatement(
-                    "CREATE TABLE IF NOT EXISTS data (" +
-                            "" +
-                            ")"
-            );
+            final DatabaseMetaData meta = connection.getMetaData();
+
+            final ResultSet exists = meta.getTables(null, null, "data", null);
+
+            if (exists.next()) return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        closeConnection();
+
+        return false;
+
+    }
+
+    @TestOnly()
+    public void createDataTable() {
+        openConnection();
+
+        try {
+            final PreparedStatement createTable = connection.prepareStatement(
+                    "CREATE TABLE IF NOT EXISTS data (" +
+                            "uuid VARCHAR(255) NOT NULL PRIMARY KEY," +
+                            "expiry INTEGER NOT NULL," +
+                            "punishment_type VARCHAR(10) NOT NULL" +
+                            ")"
+            );
+
+            createTable.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeConnection();
     }
     
     public void openConnection() {
         
-        if (retries > 3) {
+        if (retries >= 2) {
             retries = 0;
             return;
         }
-        
+
         try {
-            
+
             if (connection != null) {
-                if (!connection.isClosed()) 
+                if (!connection.isClosed())
                     return;
             }
-            
+
             Class.forName("com.mysql.jdbc.Driver");
-            
+
             connection = DriverManager.getConnection(
                     "jdbc:mysql://" + host + ":" + port + name
                     , username
                     , passphrase
             );
+
+            if (connection.isClosed()) {
+                resetConnection();
+                System.out.println("Connection issues...");
+                retries++;
+            }
             
         } catch (ClassNotFoundException | SQLException e) {
             retries += 1;
@@ -58,15 +93,6 @@ public class Database {
             System.out.println("An error has occurred, retrying.\nRetries: " + retries);
         }
 
-        try {
-            if (connection.isClosed()) {
-                resetConnection();
-                System.out.println("Connection issues...");
-                retries++;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
     
     public void closeConnection() {
