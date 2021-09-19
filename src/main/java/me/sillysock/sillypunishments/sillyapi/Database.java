@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.sillyapi;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.TestOnly;
 
 import java.sql.*;
@@ -42,14 +43,19 @@ public class Database {
     public void createDataTable() {
 
         if (dataTableExists()) {
-            System.out.println("Data table already exists!");
+            Bukkit
+                    .getConsoleSender()
+                    .sendMessage(C.RED + "Data table already exists...");
+            
             return;
         }
 
         openConnection();
 
         try {
-            System.out.println("Attempting to create data table...");
+            Bukkit
+                    .getConsoleSender()
+                    .sendMessage(C.GREEN + "Attempting to create data table...");
 
             final PreparedStatement createTable = connection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS data (" +
@@ -61,7 +67,9 @@ public class Database {
 
             createTable.execute();
 
-            System.out.println("Data table created successfully!");
+            Bukkit
+                    .getConsoleSender()
+                    .sendMessage(C.GREEN + "Data table created successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,7 +86,9 @@ public class Database {
         host = SillyPunishments.getDatabaseHost();
 
         System.out.println("Logging in with details:\n" + "Username: " + username + "\nHost: " + host + "\nPassphrase: " + passphrase + "\nName: " + name + "\nPort: " + port);
-        System.out.println(C.RED + "No, I do not store your Database information anywhere. This is purely for your information.");
+        Bukkit
+                .getConsoleSender()
+                .sendMessage(C.RED + "None of your information is stored. This is purely for your eyes only.");
 
 
         if (retries >= 2) {
