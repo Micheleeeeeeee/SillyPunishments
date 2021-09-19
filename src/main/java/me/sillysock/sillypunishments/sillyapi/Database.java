@@ -46,7 +46,7 @@ public class Database {
             Bukkit
                     .getConsoleSender()
                     .sendMessage(C.RED + "Data table already exists...");
-            
+
             return;
         }
 

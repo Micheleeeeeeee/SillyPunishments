@@ -97,7 +97,9 @@ public class SillyPunishments extends JavaPlugin {
 
     db.createDataTable();
 
-    System.out.println(C.GREEN + "The plugin has successfully started up! If you want to report any bugs, please go to https://github.com/Sillysockk/SillyPunishments");
+    Bukkit
+            .getConsoleSender()
+            .sendMessage(C.GREEN + "The plugin has successfully started up! If you want to report any bugs, please go to https://github.com/Sillysockk/SillyPunishments");
   }
 
   /**
