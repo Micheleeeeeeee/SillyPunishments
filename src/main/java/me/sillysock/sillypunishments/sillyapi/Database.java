@@ -84,7 +84,7 @@ public class Database {
             Class.forName("com.mysql.jdbc.Driver");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + host + ":" + port + name
+                    "jdbc:mysql://" + host + ":" + port + "/" + name
                     , username
                     , passphrase
             );
