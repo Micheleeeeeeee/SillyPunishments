@@ -40,9 +40,17 @@ public class Database {
 
     @TestOnly()
     public void createDataTable() {
+
+        if (dataTableExists()) {
+            System.out.println("Data table already exists!");
+            return;
+        }
+
         openConnection();
 
         try {
+            System.out.println("Attempting to create data table...");
+
             final PreparedStatement createTable = connection.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS data (" +
                             "uuid VARCHAR(255) NOT NULL PRIMARY KEY," +
@@ -52,6 +60,8 @@ public class Database {
             );
 
             createTable.execute();
+
+            System.out.println("Data table created successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
