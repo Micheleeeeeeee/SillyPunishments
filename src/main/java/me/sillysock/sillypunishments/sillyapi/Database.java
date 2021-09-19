@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.TestOnly;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.UUID;
 
 public class Database {
@@ -165,6 +166,62 @@ public class Database {
         closeConnection();
 
         return false;
+    }
+
+    public String getPunishmentType(final UUID uuid) {
+        if (!isPunished(uuid)) return "Not Punished";
+
+        openConnection();
+
+        try {
+            final PreparedStatement ps = connection.prepareStatement(
+                    "SELECT punishment_type FROM data WHERE uuid=?"
+            );
+
+            ps.setString(1, uuid.toString());
+
+            final ResultSet results = ps.executeQuery();
+
+            if (results.next()) {
+                return PunishmentType.valueOf(results.getString("punishment_type")).toString();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeConnection();
+
+        return PunishmentType.OTHER.toString();
+    }
+
+    public boolean isBannedAndNotExpired(final UUID uuid) {
+        boolean out = false;
+
+        if (!isPunished(uuid)) return false;
+
+        openConnection();
+
+        try {
+            final PreparedStatement ps = connection.prepareStatement(
+                    "SELECT expiry FROM data WHERE uuid=?"
+            );
+
+            ps.setString(1, uuid.toString());
+
+            final ResultSet results = ps.executeQuery();
+
+            if (results.next()) {
+                if (Instant.now().getEpochSecond() < results.getLong("expiry")) out = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeConnection();
+
+        return out;
     }
 
     /**
