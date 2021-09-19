@@ -79,6 +79,11 @@ public class Database {
     }
     
     public void openConnection() {
+        
+        if (retries >= 2) {
+            retries = 0;
+            return;
+        }
 
         username = SillyPunishments.getDatabaseUsername();
         passphrase = SillyPunishments.getDatabasePassphrase();
@@ -90,12 +95,6 @@ public class Database {
         Bukkit
                 .getConsoleSender()
                 .sendMessage(C.RED + "None of your information is stored. This is purely for your eyes only.");
-
-
-        if (retries >= 2) {
-            retries = 0;
-            return;
-        }
 
         try {
 
