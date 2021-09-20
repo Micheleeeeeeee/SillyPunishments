@@ -55,6 +55,8 @@ public class Database implements Listener {
             return;
         }
 
+        openConnection();
+
         try {
             Bukkit
                     .getConsoleSender()
@@ -76,6 +78,8 @@ public class Database implements Listener {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        closeConnection();
     }
     
     public void openConnection() {
@@ -141,6 +145,8 @@ public class Database implements Listener {
 
     public boolean isPunished(final UUID uuid) {
 
+        openConnection();
+
         try {
             final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
             ps.setString(1, uuid.toString());
@@ -161,11 +167,15 @@ public class Database implements Listener {
             e.printStackTrace();
         }
 
+        closeConnection();
+
         return false;
     }
 
-    public String getPunishmentType(final UUID uuid) {
-        if (!isPunished(uuid)) return "Not Punished";
+    public PunishmentType getPunishmentType(final UUID uuid) {
+        if (!isPunished(uuid)) return PunishmentType.NOT_PUNISHED;
+
+        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement(
@@ -184,7 +194,9 @@ public class Database implements Listener {
             e.printStackTrace();
         }
 
-        return PunishmentType.OTHER.toString();
+        closeConnection();
+
+        return PunishmentType.OTHER;
     }
 
     /**
@@ -199,7 +211,9 @@ public class Database implements Listener {
     public boolean isBannedAndNotExpired(final UUID uuid) {
         boolean out = false;
 
-        if (!isPunished(uuid)) return false;
+        if (!isPunished(uuid)) return out;
+
+        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement(
@@ -219,6 +233,8 @@ public class Database implements Listener {
             e.printStackTrace();
         }
 
+        closeConnection();
+
         return out;
     }
 
@@ -233,6 +249,8 @@ public class Database implements Listener {
     public long getPunishmentExpiry(final UUID uuid) {
 
         if (!isPunished(uuid)) return 0;
+
+        openConnection();
 
         long out = 0;
 
@@ -252,6 +270,8 @@ public class Database implements Listener {
         } catch (SQLException e) {
             e.printStackTrace(); // TODO better exception handling
         }
+
+        closeConnection();
 
         return out;
     }
