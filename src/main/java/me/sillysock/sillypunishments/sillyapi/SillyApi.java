@@ -51,15 +51,15 @@ public class SillyApi {
 
     createMenuItem(Material.TERRACOTTA, "Exclude", "",
                    "Exclude " + target.getName(), "From the server.", "[BETA]",
-                   17, menu);
+                   19, menu);
 
     createMenuItem(Material.TERRACOTTA, "Mute", "",
                  "Prevent " + target.getName(), " From speaking on the server.", C.RED + "BETA"
-                   , 19, menu);
+                   , 21, menu);
 
     createMenuItem(Material.TERRACOTTA, "Kick", "",
                   "Remove " + target.getName(), "From the server.", C.RED + "BETA",
-                  21, menu);
+                  23, menu);
 
     return menu;
   }
@@ -92,16 +92,16 @@ public class SillyApi {
     List<String> lore = new ArrayList<>();
 
     if (lore1 != null)
-      lore.add(lore1);
+      lore.add(C.WHITE + lore1);
 
     if (lore2 != null)
-      lore.add(lore2);
+      lore.add(C.WHITE + lore2);
 
     if (lore3 != null)
-      lore.add(lore3);
+      lore.add(C.WHITE + lore3);
 
     if (lore4 != null)
-      lore.add(lore4);
+      lore.add(C.WHITE + lore4);
 
     meta.setLore(lore); // Lore [description of item]
     meta.setDisplayName(name); // Set name of item to [name]..
