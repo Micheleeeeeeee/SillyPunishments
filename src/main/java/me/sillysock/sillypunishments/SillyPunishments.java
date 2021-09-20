@@ -99,7 +99,7 @@ public class SillyPunishments extends JavaPlugin {
 
     banList = Bukkit.getBanList(BanList.Type.NAME);
 
-    prefix = C.format(config.getString("prefix"));
+    prefix = C.format(config.getString("prefix")) + (config.getString("prefix").endsWith("]") ? "" : ":") + C.RESET;
 
     log.log(Level.INFO, "Getting Database information...");
     databaseUsername = config.getString("username");
