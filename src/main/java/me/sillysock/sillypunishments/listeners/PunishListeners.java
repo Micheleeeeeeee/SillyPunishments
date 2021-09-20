@@ -20,6 +20,8 @@ public class PunishListeners implements Listener {
 
     @EventHandler
     public void ParseReasons(final @NotNull AsyncChatEvent e) {
+        System.out.println("Caught AsyncChatEvent");
+
         final Player p = e.getPlayer();
 
         if (!SillyPunishments.getTypingPlayers().contains(p)) return;
