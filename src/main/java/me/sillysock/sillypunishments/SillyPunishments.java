@@ -99,7 +99,6 @@ public class SillyPunishments extends JavaPlugin {
     databasePassphrase = config.getString("passphrase");
     databaseName = config.getString("database");
 
-    db.openConnection();
     db.createDataTable();
 
     Bukkit
