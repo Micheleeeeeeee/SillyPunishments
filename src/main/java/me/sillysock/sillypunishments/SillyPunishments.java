@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +65,7 @@ public class SillyPunishments extends JavaPlugin {
     api = new SillyApi();
     db = new Database();
 
-    isTypingReason = new HashMap<>();
+    isTypingReason = new ArrayList<>();
 
     log = getLogger();
 
