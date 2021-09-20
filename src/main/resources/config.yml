@@ -4,3 +4,12 @@ moderator: 'moderator' # perm string.mod string [example: sillyperms.moderator]
 member: 'member' # perm string.member string [example: sillyperms.member]
 
 miscellaneous: 'miscellaneous' # perm string.miscellaneous string [example: sillyperms.miscellaneous]
+
+# MYSQL
+# Replace these values with your own.
+# Make sure this user has permissions to INSERT, REMOVE on your selected DATABASE.
+username: 'root'
+host: 'localhost'
+passphrase: 'password'
+port: 3306
+database: 'database'

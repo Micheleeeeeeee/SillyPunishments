@@ -1,23 +1,45 @@
 package me.sillysock.sillypunishments.sillyapi;
 
-import java.util.ArrayList;
-import java.util.List;
+import me.sillysock.sillypunishments.SillyPunishments;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class SillyApi {
 
-  private static Inventory menu;
-  private String title = "Punish ";
+  /*
+  SillyReminders:
+
+  Flow Chart for Menus:
+
+  Punishment Main Menu
+  --> User Selection [KICK, BAN, MUTE]
+  --> Punishment Duration
+  --> Reason [or custom]
+  --> Database Entry for punishment added
+  --> Punishment Executed on server
+   */
+
+  private Inventory menu;
+  private Inventory banMenu;
+  private String title;
+  private static final SillyPunishments main = SillyPunishments.getInstance();
+
+  public static final String BUMPER = StringUtils.repeat("\n", 25);
 
   public Inventory createPunishMenu(final OfflinePlayer target) {
-    title += target.getName();
+    title = "Punish " + C.YELLOW + target.getName();
 
     menu = Bukkit.createInventory(
         null, 36, title); // Create an inventory with the size 36.
@@ -27,11 +49,36 @@ public class SillyApi {
 
     menu.setItem(4, head); // Add head to the menu at the 4th slot.
 
-    createMenuItem(Material.TERRACOTTA, "BAN", "",
+    createMenuItem(Material.TERRACOTTA, "Exclude", "",
                    "Exclude " + target.getName(), "From the server.", "[BETA]",
                    17, menu);
 
+    createMenuItem(Material.TERRACOTTA, "Mute", "",
+                 "Prevent " + target.getName(), " From speaking on the server.", C.RED + "BETA"
+                   , 19, menu);
+
+    createMenuItem(Material.TERRACOTTA, "Kick", "",
+                  "Remove " + target.getName(), "From the server.", C.RED + "BETA",
+                  21, menu);
+
     return menu;
+  }
+
+  /**
+   * <p style="font-size: 12px; color: rgb(200, 151, 51);">
+   * createBanMenu creates the exclusion menu for Minecraft.
+   * This menu is used exclusively for excluding players from the server.
+   * </p>
+   * @param target
+   * @return {@code Inventory}
+   */
+
+  public Inventory createBanMenu(final OfflinePlayer target) {
+    banMenu = Bukkit.createInventory(null, 36, "Exclude " + target);
+
+    banMenu.setItem(4, getHead(target));
+
+    return banMenu;
   }
 
   private static void createMenuItem(final Material material, final String name,
@@ -56,8 +103,8 @@ public class SillyApi {
     if (lore4 != null)
       lore.add(lore4);
 
-    meta.setLore(lore);
-    meta.setLocalizedName(name);
+    meta.setLore(lore); // Lore [description of item]
+    meta.setDisplayName(name); // Set name of item to [name]..
 
     item.setItemMeta(meta);
 
@@ -74,4 +121,25 @@ public class SillyApi {
 
     return head;
   }
+
+  /**
+   * Deprecated as this plugin will migrate to MySQL.
+   * @param p
+   * @param expires
+   * @param reason
+   * @return
+   */
+
+  @Deprecated()
+  public static void banPlayer(final Player p, final Date expires, final String reason) { }
+
+  /**
+   * Deprecated as this plugin will migrate to MySQL.
+   * @param player
+   * @param reason
+   * @return
+   */
+
+  @Deprecated()
+  public static void permanentBan(final Player player, final String reason) { }
 }

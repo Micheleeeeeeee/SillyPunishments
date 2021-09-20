@@ -6,8 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.server.ServerCommandEvent;
 
 import java.util.Objects;
 
@@ -33,9 +31,11 @@ public class HelloWorld implements CommandExecutor {
         final Player p = (Player) sender;
 
         if (args.length < 1) {
-            p.sendMessage(prefix + ChatColor.RED + " Please use the correct arguments. </ban [player] {reason}");
+            p.sendMessage(prefix + ChatColor.RED + " lease use the correct arguments. </ban [player] {reason}");
             return false;
         }
+
+        p.sendMessage("Test...");
 
         return false;
     }

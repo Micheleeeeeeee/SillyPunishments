@@ -25,18 +25,35 @@ public class PunishListeners implements Listener {
         if (e.getCurrentItem() == null)
             return;
 
+        e.setCancelled(true); // Don't let user grab item out of menu :Scared:
+
         final ItemStack item = e.getCurrentItem();
         final ItemMeta meta = item.getItemMeta();
         final String name = meta.getDisplayName();
 
-        switch (name) {
-            case "BAN":
-                type = PunishmentType.BAN;
-            case "KICK":
-                type = PunishmentType.KICK;
-            case "MUTE":
-                type = PunishmentType.MUTE;
+        type = parseType(name);
+    }
 
-        }
+    /**
+     * The {@code parseType} method takes one parameter, a {@code String type}, and parses
+     * and determines which PunishmentType it is. If the String does not match any of the
+     * normal types, it returns {@code PunishmentType.OTHER}
+     * @param type
+     * @return PunishmentType
+     */
+
+    private PunishmentType parseType(final String type) {
+        PunishmentType t = PunishmentType.OTHER;
+
+        if (type.equalsIgnoreCase("ban"))
+            t = PunishmentType.BAN;
+
+        if (type.equalsIgnoreCase("mute"))
+            t = PunishmentType.MUTE;
+
+        if (type.equalsIgnoreCase("kick"))
+            t = PunishmentType.KICK;
+
+        return t;
     }
 }
