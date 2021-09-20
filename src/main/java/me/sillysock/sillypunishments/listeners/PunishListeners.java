@@ -1,6 +1,5 @@
 package me.sillysock.sillypunishments.listeners;
 
-import io.papermc.paper.event.player.AsyncChatEvent;
 import me.sillysock.sillypunishments.SillyPunishments;
 import me.sillysock.sillypunishments.sillyapi.C;
 import me.sillysock.sillypunishments.sillyapi.PunishmentType;
@@ -9,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +19,7 @@ public class PunishListeners implements Listener {
     private PunishmentType type;
 
     @EventHandler
-    public void ParseReasons(final @NotNull AsyncChatEvent e) {
+    public void ParseReasons(final @NotNull AsyncPlayerChatEvent e) {
 
         final Player p = e.getPlayer();
 
