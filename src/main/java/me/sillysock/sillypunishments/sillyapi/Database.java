@@ -243,7 +243,7 @@ public class Database implements Listener {
      * Their punishment expires. If their punishment is permanent, it will return -1.
      * If they are not punished, it will return 0.
      * @param uuid
-     * @return unix
+     * @return unix time
      */
 
     public long getPunishmentExpiry(final UUID uuid) {

@@ -20,6 +20,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,6 +47,10 @@ public class SillyPunishments extends JavaPlugin {
 
   protected static Database db;
 
+  protected static ArrayList<Player> isTypingReason;
+
+  protected static String prefix;
+
   /**
    * <h1 id="text" style="color: rgb(255, 192, 203);">
    *     Plugin Startup Logic
@@ -59,6 +65,8 @@ public class SillyPunishments extends JavaPlugin {
     instance = this;
     api = new SillyApi();
     db = new Database();
+
+    isTypingReason = new HashMap<>();
 
     log = getLogger();
 
@@ -91,6 +99,8 @@ public class SillyPunishments extends JavaPlugin {
     registerEvent("PlayerJoinEvent", new Database());
 
     banList = Bukkit.getBanList(BanList.Type.NAME);
+
+    prefix = C.format(config.getString("prefix"));
 
     log.log(Level.INFO, "Getting Database information...");
     databaseUsername = config.getString("username");
@@ -222,6 +232,14 @@ public class SillyPunishments extends JavaPlugin {
 
   public static Database getDb() {
     return db;
+  }
+
+  public static ArrayList<Player> getTypingPlayers() {
+    return isTypingReason;
+  }
+
+  public static String getPrefix() {
+    return prefix;
   }
 }
 

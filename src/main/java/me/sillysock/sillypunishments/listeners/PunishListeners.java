@@ -1,6 +1,11 @@
 package me.sillysock.sillypunishments.listeners;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
+import me.sillysock.sillypunishments.SillyPunishments;
+import me.sillysock.sillypunishments.sillyapi.C;
 import me.sillysock.sillypunishments.sillyapi.PunishmentType;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -14,10 +19,22 @@ public class PunishListeners implements Listener {
     private PunishmentType type;
 
     @EventHandler
+    public void ParseReasons(final @NotNull AsyncChatEvent e) {
+        final Player p = e.getPlayer();
+
+        if (!SillyPunishments.getTypingPlayers().contains(p)) return;
+
+        e.setCancelled(true);
+
+        p.sendMessage(SillyPunishments.getPrefix() + " Reason submitted...");
+    }
+
+    @EventHandler
     public void PunishMainMenuHandler(final @NotNull InventoryClickEvent e) {
         final InventoryView view = e.getView();
-
         final String title = view.getTitle();
+
+        final Player p = (Player) e.getWhoClicked();
 
         if (!title.contains("Punish"))
             return;
@@ -27,11 +44,15 @@ public class PunishListeners implements Listener {
 
         e.setCancelled(true); // Don't let user grab item out of menu :Scared:
 
+        if (!e.getCurrentItem().getType().equals(Material.TERRACOTTA)) return;
+
         final ItemStack item = e.getCurrentItem();
         final ItemMeta meta = item.getItemMeta();
         final String name = meta.getDisplayName();
 
         type = parseType(name);
+        SillyPunishments.getTypingPlayers().add(p);
+        p.sendMessage(SillyPunishments.getPrefix() + C.AQUA + " Please type the reason for the punishment.");
     }
 
     /**
