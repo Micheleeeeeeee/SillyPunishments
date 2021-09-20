@@ -148,7 +148,7 @@ public class Database implements Listener {
         openConnection();
 
         try {
-            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
+            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM data WHERE uuid=?");
             ps.setString(1, uuid.toString());
 
             final ResultSet results = ps.executeQuery();
@@ -255,7 +255,7 @@ public class Database implements Listener {
         long out = 0;
 
         try {
-            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
+            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM data WHERE uuid=?");
             ps.setString(1, uuid.toString());
 
             final ResultSet results = ps.executeQuery();
