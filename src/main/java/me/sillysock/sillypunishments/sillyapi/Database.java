@@ -2,13 +2,17 @@ package me.sillysock.sillypunishments.sillyapi;
 
 import me.sillysock.sillypunishments.SillyPunishments;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.TestOnly;
 
 import java.sql.*;
 import java.time.Instant;
 import java.util.UUID;
 
-public class Database {
+public class Database implements Listener {
     
     private String host;
     private String username;
@@ -51,8 +55,6 @@ public class Database {
             return;
         }
 
-        openConnection();
-
         try {
             Bukkit
                     .getConsoleSender()
@@ -74,8 +76,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        closeConnection();
     }
     
     public void openConnection() {
@@ -140,7 +140,6 @@ public class Database {
     }
 
     public boolean isPunished(final UUID uuid) {
-        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
@@ -162,15 +161,11 @@ public class Database {
             e.printStackTrace();
         }
 
-        closeConnection();
-
         return false;
     }
 
     public String getPunishmentType(final UUID uuid) {
         if (!isPunished(uuid)) return "Not Punished";
-
-        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement(
@@ -189,8 +184,6 @@ public class Database {
             e.printStackTrace();
         }
 
-        closeConnection();
-
         return PunishmentType.OTHER.toString();
     }
 
@@ -207,8 +200,6 @@ public class Database {
         boolean out = false;
 
         if (!isPunished(uuid)) return false;
-
-        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement(
@@ -228,8 +219,6 @@ public class Database {
             e.printStackTrace();
         }
 
-        closeConnection();
-
         return out;
     }
 
@@ -246,7 +235,6 @@ public class Database {
         if (!isPunished(uuid)) return 0;
 
         long out = 0;
-        openConnection();
 
         try {
             final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM " + name + " WHERE uuid=?");
@@ -265,8 +253,15 @@ public class Database {
             e.printStackTrace(); // TODO better exception handling
         }
 
-        closeConnection();
-
         return out;
+    }
+
+    @EventHandler
+    public void CheckForPunishmentsTest(final PlayerJoinEvent e) {
+        final Player p = e.getPlayer();
+        final UUID uuid = p.getUniqueId();
+
+        if (isPunished(uuid)) p.sendMessage(C.RED + "You are punished!");
+        else p.sendMessage(C.GREEN + "You are not punished!");
     }
 }

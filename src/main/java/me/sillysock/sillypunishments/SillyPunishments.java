@@ -88,6 +88,8 @@ public class SillyPunishments extends JavaPlugin {
     registerEvent("InventoryClickEvent", new PunishListeners()); // Registers the Listeners from the
                                                                            // PunishListeners class and prints a log message.
 
+    registerEvent("PlayerJoinEvent", new Database());
+
     banList = Bukkit.getBanList(BanList.Type.NAME);
 
     log.log(Level.INFO, "Getting Database information...");
@@ -97,12 +99,12 @@ public class SillyPunishments extends JavaPlugin {
     databasePassphrase = config.getString("passphrase");
     databaseName = config.getString("database");
 
+    db.openConnection();
     db.createDataTable();
 
     Bukkit
             .getConsoleSender()
             .sendMessage(C.GREEN + "The plugin has successfully started up! If you want to report any bugs, please go to https://github.com/Sillysockk/SillyPunishments");
-
 
     new BukkitRunnable() {
       @Override
@@ -131,6 +133,7 @@ public class SillyPunishments extends JavaPlugin {
   @Override
   public void onDisable() {
     log = null;
+    db.closeConnection();
   }
 
   /**

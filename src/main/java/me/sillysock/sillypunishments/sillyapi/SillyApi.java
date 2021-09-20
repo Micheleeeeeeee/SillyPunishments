@@ -54,12 +54,12 @@ public class SillyApi {
                    19, menu);
 
     createMenuItem(Material.TERRACOTTA, "Mute", "",
-                 "Prevent " + target.getName(), " From speaking on the server.", C.RED + "BETA"
-                   , 21, menu);
+                 "Prevent " + target.getName(), "From speaking on the server.", C.RED + "BETA"
+                   , 22, menu);
 
     createMenuItem(Material.TERRACOTTA, "Kick", "",
                   "Remove " + target.getName(), "From the server.", C.RED + "BETA",
-                  23, menu);
+                  25, menu);
 
     return menu;
   }
@@ -86,6 +86,7 @@ public class SillyApi {
                                      final String lore3, final String lore4,
                                      final int slot,
                                      final @NotNull Inventory menu) {
+
     ItemStack item = new ItemStack(material);
     ItemMeta meta = item.getItemMeta();
 
