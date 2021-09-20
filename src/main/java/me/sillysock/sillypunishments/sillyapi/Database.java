@@ -187,7 +187,7 @@ public class Database implements Listener {
             final ResultSet results = ps.executeQuery();
 
             if (results.next()) {
-                return PunishmentType.valueOf(results.getString("punishment_type")).toString();
+                return PunishmentType.valueOf(results.getString("punishment_type"));
             }
 
         } catch (SQLException e) {
