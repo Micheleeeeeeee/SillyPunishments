@@ -2,21 +2,34 @@ package me.sillysock.sillypunishments.listeners;
 
 import me.sillysock.sillypunishments.SillyPunishments;
 import me.sillysock.sillypunishments.sillyapi.C;
+import me.sillysock.sillypunishments.sillyapi.Database;
 import me.sillysock.sillypunishments.sillyapi.PunishmentType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
+
+import java.util.Locale;
 
 public class PunishListeners implements Listener {
 
+    /*
+    Idea before I forget:
+
+    Put lang.yml stuff on database???
+    Allow people to change config stuff with a GUI
+     */
+
     private PunishmentType type;
+    private static final Database db = SillyPunishments.getDb();
 
     @EventHandler
     public void ParseReasons(final @NotNull AsyncPlayerChatEvent e) {
@@ -28,6 +41,28 @@ public class PunishListeners implements Listener {
         e.setCancelled(true);
 
         p.sendMessage(SillyPunishments.getPrefix() + " Reason submitted...");
+    }
+
+    /**
+     * This method cancels a player from speaking when they are currently muted.
+     * @param e
+     */
+
+    @TestOnly
+    @EventHandler
+    public void HandleMute(final @NotNull AsyncPlayerChatEvent e) {
+
+        /*
+        TODO new Player variable.
+         */
+
+        final Player p = e.getPlayer();
+
+        if (db.isMutedAndNotExpired(p.getUniqueId())) {
+            e.setCancelled(true);
+
+            p.sendMessage(SillyPunishments.getPrefix() + C.RED + " You cannot speak, as you are muted.");
+        };
     }
 
     @EventHandler
@@ -54,6 +89,8 @@ public class PunishListeners implements Listener {
         type = parseType(name);
         SillyPunishments.getTypingPlayers().add(p);
         p.sendMessage(SillyPunishments.getPrefix() + C.AQUA + " Please type the reason for the punishment.");
+
+        p.closeInventory(InventoryCloseEvent.Reason.UNKNOWN);
     }
 
     /**
@@ -66,6 +103,15 @@ public class PunishListeners implements Listener {
 
     private PunishmentType parseType(final String type) {
         PunishmentType t = PunishmentType.OTHER;
+
+        switch (type.toLowerCase(Locale.ROOT)) {
+            case "ban":
+                t = PunishmentType.BAN;
+            case "mute":
+                t = PunishmentType.MUTE;
+            case "kick":
+                t = PunishmentType.KICK;
+        }
 
         if (type.equalsIgnoreCase("ban"))
             t = PunishmentType.BAN;

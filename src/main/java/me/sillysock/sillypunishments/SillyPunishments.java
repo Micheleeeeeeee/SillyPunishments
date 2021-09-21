@@ -92,10 +92,13 @@ public class SillyPunishments extends JavaPlugin {
                                 // class (modules --> BanCommand.java) and
                                 // prints a log message.
 
-    registerEvent("InventoryClickEvent", new PunishListeners()); // Registers the Listeners from the
+    registerEvent("InventoryClickEvent",
+                  new PunishListeners()); // Registers the Listeners from the
                                                                            // PunishListeners class and prints a log message.
 
-    registerEvent("PlayerJoinEvent", new Database());
+    registerEvent("PlayerJoinEvent",  // Registers the event from the Database class
+                  new Database());              // (sillyapi --> Database.java) and
+                                                // prints a log message.
 
     banList = Bukkit.getBanList(BanList.Type.NAME);
 

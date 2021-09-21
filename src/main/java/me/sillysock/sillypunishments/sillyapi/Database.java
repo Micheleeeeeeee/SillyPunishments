@@ -220,7 +220,7 @@ public class Database implements Listener {
 
         try {
             final PreparedStatement ps = connection.prepareStatement(
-                    "SELECT expiry FROM data WHERE uuid=?"
+                    "SELECT expiry FROM data WHERE uuid=? AND punishment_type='BAN'"
             );
 
             ps.setString(1, uuid.toString());
@@ -237,6 +237,45 @@ public class Database implements Listener {
         }
 
         closeConnection();
+
+        return out;
+    }
+
+    /**
+     * isPunishedAndNotExpires is a method that, given parameter {@code UUID uuid} and {@code PunishmentType type}
+     * returns whether the users punishment has expired or not. If the punishment is permanent, {@code -1}, this counts as
+     * not expired. If the user is not punished, {@code false} is returned.
+     * @param uuid
+     * @param type
+     * @return
+     */
+
+    @TestOnly()
+    public boolean isPunishedAndNotExpired(final UUID uuid, final PunishmentType type) {
+        boolean out = false;
+
+        if (!(isPunished(uuid))) return out;
+
+        try {
+            openConnection();
+
+            final PreparedStatement ps = connection.prepareStatement("SELECT expiry FROM data WHERE uuid=? AND punishment_type=?");
+            ps.setString(1, uuid.toString());
+            ps.setString(2, type.toString());
+
+            final ResultSet results = ps.executeQuery();
+
+            while (results.next()) {
+                final long expiry = results.getLong("expiry");
+
+                if (Instant.now().getEpochSecond() < expiry || expiry == -1) out = true;
+            }
+
+            results.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return out;
     }
@@ -279,6 +318,38 @@ public class Database implements Listener {
         return out;
     }
 
+    @Deprecated
+    public boolean isMutedAndNotExpired(final UUID uuid) {
+
+        boolean out = false;
+
+        if (!isPunished(uuid)) return out;
+
+        openConnection();
+
+        try {
+            final PreparedStatement ps = connection.prepareStatement(
+                    "SELECT expiry FROM data WHERE uuid=? AND punishment_type='MUTE'"
+            );
+
+            ps.setString(1, uuid.toString());
+
+            final ResultSet results = ps.executeQuery();
+
+            if (results.next()) {
+                out = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeConnection();
+
+        return out;
+    }
+
+    @Deprecated
     @EventHandler
     public void CheckForPunishmentsTest(final PlayerJoinEvent e) {
         final Player p = e.getPlayer();
