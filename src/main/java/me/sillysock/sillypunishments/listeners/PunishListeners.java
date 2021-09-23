@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.listeners;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import me.sillysock.sillypunishments.modules.BanCommand;
 import me.sillysock.sillypunishments.sillyapi.C;
 import me.sillysock.sillypunishments.sillyapi.Database;
 import me.sillysock.sillypunishments.sillyapi.PunishmentType;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.TestOnly;
 
-import java.util.Locale;
+import java.util.HashMap;
 
 public class PunishListeners implements Listener {
 
@@ -28,6 +29,7 @@ public class PunishListeners implements Listener {
     Allow people to change config stuff with a GUI
      */
 
+    private static HashMap<Player, PunishmentType> punishers;
     private PunishmentType type;
     private static final Database db = SillyPunishments.getDb();
 
@@ -72,21 +74,16 @@ public class PunishListeners implements Listener {
 
         final Player p = (Player) e.getWhoClicked();
 
-        if (!title.contains("Punish"))
-            return;
-
-        if (e.getCurrentItem() == null)
+        if (!title.contains("Punish") || e.getCurrentItem() == null || !e.getCurrentItem().getType().equals(Material.TERRACOTTA))
             return;
 
         e.setCancelled(true); // Don't let user grab item out of menu :Scared:
-
-        if (!e.getCurrentItem().getType().equals(Material.TERRACOTTA)) return;
 
         final ItemStack item = e.getCurrentItem();
         final ItemMeta meta = item.getItemMeta();
         final String name = meta.getDisplayName();
 
-        type = parseType(name);
+        type = parseType(name, p);
         SillyPunishments.getTypingPlayers().add(p);
         p.sendMessage(SillyPunishments.getPrefix() + C.AQUA + " Please type the reason for the punishment.");
 
@@ -101,26 +98,24 @@ public class PunishListeners implements Listener {
      * @return PunishmentType
      */
 
-    private PunishmentType parseType(final String type) {
+    private PunishmentType parseType(final String type, final Player p) {
         PunishmentType t = PunishmentType.OTHER;
+        punishers = BanCommand.getPunishers();
 
-        switch (type.toLowerCase(Locale.ROOT)) {
-            case "ban":
-                t = PunishmentType.BAN;
-            case "mute":
-                t = PunishmentType.MUTE;
-            case "kick":
-                t = PunishmentType.KICK;
+        if (type.equalsIgnoreCase("ban")) {
+            t = PunishmentType.BAN;
+            punishers.put(p, t);
         }
 
-        if (type.equalsIgnoreCase("ban"))
-            t = PunishmentType.BAN;
-
-        if (type.equalsIgnoreCase("mute"))
+        if (type.equalsIgnoreCase("mute")) {
             t = PunishmentType.MUTE;
+            punishers.put(p, t);
+        }
 
-        if (type.equalsIgnoreCase("kick"))
+        if (type.equalsIgnoreCase("kick")) {
             t = PunishmentType.KICK;
+            punishers.put(p, t);
+        }
 
         return t;
     }

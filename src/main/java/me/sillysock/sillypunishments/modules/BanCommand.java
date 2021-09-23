@@ -1,6 +1,7 @@
 package me.sillysock.sillypunishments.modules;
 
 import me.sillysock.sillypunishments.SillyPunishments;
+import me.sillysock.sillypunishments.sillyapi.PunishmentType;
 import me.sillysock.sillypunishments.sillyapi.SillyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.HashMap;
 
 /**
  * <h1 style="font-family: --apple-system"><code style="font-size: 20px;">{@code
@@ -20,6 +23,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 
 public class BanCommand implements CommandExecutor {
+
+  private static HashMap<Player, PunishmentType> punishers = new HashMap<>();
 
   private final FileConfiguration langFile = SillyPunishments.getLangFile();
   private final SillyApi api = SillyPunishments.getApi();
@@ -43,23 +48,26 @@ public class BanCommand implements CommandExecutor {
 
     final Player p = (Player)sender;
 
-    if (!(p.hasPermission(modRoot)) || !(p.hasPermission(adminRoot)) ||
-        !(p.hasPermission(prefix + "*"))) {
-
+    if (p.hasPermission(modRoot) || p.hasPermission(adminRoot) ||
+        p.hasPermission(prefix + "*")) {
+      p.openInventory(api.createPunishMenu(p));
+    } else {
       p.sendMessage(
-          noPermission != null
-              ? noPermission
-              : "You do not have the required permission to execute this command.");
+              noPermission != null
+                      ? noPermission
+                      : "You do not have the required permission to execute this command.");
 
       return true;
     }
-
-    p.openInventory(api.createPunishMenu(p));
 
     return false;
   }
 
   private boolean checkPermission(final Player p) {
     return false; // TODO
+  }
+
+  public static HashMap<Player, PunishmentType> getPunishers() {
+    return punishers;
   }
 }
